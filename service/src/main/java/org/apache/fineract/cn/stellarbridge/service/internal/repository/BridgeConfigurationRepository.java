@@ -23,6 +23,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BridgeConfigurationEntityRepository extends JpaRepository<BridgeConfigurationEntity, Long> {
+public interface BridgeConfigurationRepository extends JpaRepository<BridgeConfigurationEntity, Long> {
   Optional<BridgeConfigurationEntity> findByTenantIdentifier(String identifier);
+
+  BridgeConfigurationEntity findByStellarAccountIdentifier(String accountId);
 }

@@ -41,7 +41,7 @@ public class BridgeConfigurationEventListener {
   @JmsListener(
       subscription = EventConstants.DESTINATION,
       destination = EventConstants.DESTINATION,
-      selector = EventConstants.SELECTOR_POST_SAMPLE
+      selector = EventConstants.SELECTOR_PUT_CONFIG
   )
   public void onChangeConfiguration(@Header(TenantHeaderFilter.TENANT_HEADER) final String tenant,
                              final String payload) {

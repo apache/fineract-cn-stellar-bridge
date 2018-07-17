@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.apache.fineract.cn.stellarbridge.service;
+package org.apache.fineract.cn.stellarbridge.service.internal.config;
 
 import org.apache.fineract.cn.anubis.config.EnableAnubis;
 import org.apache.fineract.cn.api.config.EnableApiFactory;
@@ -28,7 +28,8 @@ import org.apache.fineract.cn.lang.config.EnableServiceException;
 import org.apache.fineract.cn.lang.config.EnableTenantContext;
 import org.apache.fineract.cn.mariadb.config.EnableMariaDB;
 import org.apache.fineract.cn.permittedfeignclient.config.EnablePermissionRequestingFeignClient;
-import org.apache.fineract.cn.stellarbridge.service.internal.identity.ApplicationPermissionRequestCreator;
+import org.apache.fineract.cn.stellarbridge.service.ServiceConstants;
+import org.apache.fineract.cn.stellarbridge.service.internal.accounting.JournalEntryCreator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -50,18 +51,22 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableAsync
 @EnableTenantContext
 @EnableCassandra
-@EnableMariaDB
+@EnableMariaDB(forTenantContext = false)
 @EnableCommandProcessing
 @EnableAnubis
 @EnableServiceException
-@EnablePermissionRequestingFeignClient(feignClasses = {ApplicationPermissionRequestCreator.class})
+@EnablePermissionRequestingFeignClient(feignClasses = {JournalEntryCreator.class})
 @RibbonClient(name = "rhythm-v1")
 @EnableApplicationName
-@EnableFeignClients(clients = {ApplicationPermissionRequestCreator.class})
+@EnableFeignClients(clients = {JournalEntryCreator.class})
 @ComponentScan({
     "org.apache.fineract.cn.stellarbridge.service.rest",
     "org.apache.fineract.cn.stellarbridge.service.internal.service",
+    "org.apache.fineract.cn.stellarbridge.service.internal.config",
     "org.apache.fineract.cn.stellarbridge.service.internal.repository",
+    "org.apache.fineract.cn.stellarbridge.service.internal.federation",
+    "org.apache.fineract.cn.stellarbridge.service.internal.horizonadapter",
+    "org.apache.fineract.cn.stellarbridge.service.internal.accounting",
     "org.apache.fineract.cn.stellarbridge.service.internal.command.handler"
 })
 @EnableJpaRepositories({

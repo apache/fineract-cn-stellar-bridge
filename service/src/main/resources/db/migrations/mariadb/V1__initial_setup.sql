@@ -20,9 +20,20 @@
 CREATE TABLE nenet_configuration (
   id BIGINT NOT NULL AUTO_INCREMENT,
   tenant_identifier        VARCHAR(32)  NOT NULL,
-  fineract_incoming_identifier VARCHAR(512) NOT NULL,
-  fineract_outgoing_identifier VARCHAR(512) NOT NULL,
+  fineract_incoming_ledger VARCHAR(512) NOT NULL,
+  fineract_outgoing_ledger VARCHAR(512) NOT NULL,
+  fineract_stellar_ledger VARCHAR(512) NOT NULL,
   stellar_identifier VARCHAR(512) NULL,
-  CONSTRAINT nenet_uq UNIQUE (tenant_identifier),
-  CONSTRAINT stellar_identifier PRIMARY KEY (id)
+  stellar_private_key VARCHAR(512) NULL,
+  CONSTRAINT nenet_configuration_uq UNIQUE (tenant_identifier),
+  CONSTRAINT nenet_configuration_pk PRIMARY KEY (id)
+);
+
+CREATE TABLE nenet_stellar_cursor (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  xcursor            VARCHAR(50)  NOT NULL,
+  processed          BOOLEAN      NOT NULL,
+  created_on         TIMESTAMP    NOT NULL,
+  CONSTRAINT nenet_stellar_cursor_uq UNIQUE (xcursor),
+  CONSTRAINT nenet_stellar_cursor_pk PRIMARY KEY (id)
 );

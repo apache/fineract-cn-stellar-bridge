@@ -34,7 +34,7 @@ import org.junit.rules.TestRule;
  */
 public class SuiteTestEnvironment {
   static final String APP_VERSION = "1";
-  static final String APP_NAME = "stellarbridge-v1" + APP_VERSION;
+  static final String APP_NAME = "stellarbridge-v" + APP_VERSION;
 
   static final TestEnvironment testEnvironment = new TestEnvironment(APP_NAME);
   static final CassandraInitializer cassandraInitializer = new CassandraInitializer();

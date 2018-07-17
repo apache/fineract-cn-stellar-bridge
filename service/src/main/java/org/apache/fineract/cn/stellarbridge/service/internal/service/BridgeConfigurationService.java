@@ -21,22 +21,22 @@ package org.apache.fineract.cn.stellarbridge.service.internal.service;
 import java.util.Optional;
 import org.apache.fineract.cn.stellarbridge.api.v1.domain.BridgeConfiguration;
 import org.apache.fineract.cn.stellarbridge.service.internal.mapper.BridgeConfigurationMapper;
-import org.apache.fineract.cn.stellarbridge.service.internal.repository.BridgeConfigurationEntityRepository;
+import org.apache.fineract.cn.stellarbridge.service.internal.repository.BridgeConfigurationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BridgeConfigurationService {
 
-  private final BridgeConfigurationEntityRepository bridgeConfigurationEntityRepository;
+  private final BridgeConfigurationRepository bridgeConfigurationRepository;
 
   @Autowired
-  public BridgeConfigurationService(final BridgeConfigurationEntityRepository bridgeConfigurationEntityRepository) {
+  public BridgeConfigurationService(final BridgeConfigurationRepository bridgeConfigurationRepository) {
     super();
-    this.bridgeConfigurationEntityRepository = bridgeConfigurationEntityRepository;
+    this.bridgeConfigurationRepository = bridgeConfigurationRepository;
   }
 
   public Optional<BridgeConfiguration> findByTenantIdentifier(final String tenantIdentifier) {
-    return this.bridgeConfigurationEntityRepository.findByTenantIdentifier(tenantIdentifier).map(BridgeConfigurationMapper::map);
+    return this.bridgeConfigurationRepository.findByTenantIdentifier(tenantIdentifier).map(BridgeConfigurationMapper::map);
   }
 }

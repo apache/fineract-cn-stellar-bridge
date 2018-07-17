@@ -16,19 +16,19 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.apache.fineract.cn.stellarbridge.service.internal.identity;
+package org.apache.fineract.cn.stellarbridge.service.internal.accounting;
 
-import javax.validation.Valid;
+import org.apache.fineract.cn.accounting.api.v1.client.JournalEntryAlreadyExistsException;
+import org.apache.fineract.cn.accounting.api.v1.client.JournalEntryValidationException;
+import org.apache.fineract.cn.accounting.api.v1.domain.JournalEntry;
 import org.apache.fineract.cn.anubis.annotation.Permittable;
 import org.apache.fineract.cn.api.annotation.ThrowsException;
-import org.apache.fineract.cn.identity.api.v1.client.ApplicationPermissionAlreadyExistsException;
-import org.apache.fineract.cn.identity.api.v1.domain.Permission;
+import org.apache.fineract.cn.api.annotation.ThrowsExceptions;
 import org.apache.fineract.cn.permittedfeignclient.annotation.EndpointSet;
 import org.apache.fineract.cn.permittedfeignclient.annotation.PermittedFeignClientsConfiguration;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,16 +36,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 /**
  * @author Myrle Krantz
  */
-@EndpointSet(identifier = "stellarbridge__v1__identity__v1")
-@FeignClient(name="identity-v1", path="/identity/v1", configuration=PermittedFeignClientsConfiguration.class)
-public interface ApplicationPermissionRequestCreator {
-
-  @RequestMapping(value = "/applications/{applicationidentifier}/permissions", method = RequestMethod.POST,
-          consumes = {MediaType.APPLICATION_JSON_VALUE},
-          produces = {MediaType.ALL_VALUE})
-  @ThrowsException(status = HttpStatus.CONFLICT, exception = ApplicationPermissionAlreadyExistsException.class)
-  @Permittable(groupId = org.apache.fineract.cn.identity.api.v1.PermittableGroupIds.APPLICATION_SELF_MANAGEMENT)
-  void createApplicationPermission(
-      @PathVariable("applicationidentifier") String applicationIdentifier,
-      @RequestBody @Valid Permission permission);
+@EndpointSet(identifier = "stellarbridge__v1__accounting__v1")
+@FeignClient(name="accounting-v1", path="/accounting/v1", configuration=PermittedFeignClientsConfiguration.class)
+public interface JournalEntryCreator {
+  @RequestMapping(
+      value = "/journal",
+      method = RequestMethod.POST,
+      produces = {MediaType.APPLICATION_JSON_VALUE},
+      consumes = {MediaType.APPLICATION_JSON_VALUE}
+  )
+  @ThrowsExceptions({
+      @ThrowsException(status = HttpStatus.BAD_REQUEST, exception = JournalEntryValidationException.class),
+      @ThrowsException(status = HttpStatus.CONFLICT, exception = JournalEntryAlreadyExistsException.class)
+  })
+  @Permittable(groupId = org.apache.fineract.cn.accounting.api.v1.PermittableGroupIds.THOTH_JOURNAL)
+  void createJournalEntry(@RequestBody final JournalEntry journalEntry);
 }

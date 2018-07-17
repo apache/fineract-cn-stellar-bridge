@@ -28,7 +28,8 @@ ext.versions = [
         frameworktest: '0.1.0-BUILD-SNAPSHOT',
         frameworkanubis: '0.1.0-BUILD-SNAPSHOT',
         frameworkpermittedfeignclient: '0.1.0-BUILD-SNAPSHOT',
-        identity:  '0.1.0-BUILD-SNAPSHOT',
+        accounting :  '0.1.0-BUILD-SNAPSHOT',
+        stellar : '0.1.6',
         validator : '5.3.0.Final'
 ]
 
@@ -45,6 +46,8 @@ tasks.withType(JavaCompile) {
 repositories {
     jcenter()
     mavenLocal()
+    mavenCentral()
+    maven { url "https://jitpack.io" }
 }
 
 dependencyManagement {

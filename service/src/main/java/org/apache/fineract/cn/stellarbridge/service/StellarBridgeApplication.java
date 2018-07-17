@@ -18,6 +18,7 @@
  */
 package org.apache.fineract.cn.stellarbridge.service;
 
+import org.apache.fineract.cn.stellarbridge.service.internal.config.StellarBridgeConfiguration;
 import org.springframework.boot.SpringApplication;
 
 public class StellarBridgeApplication {

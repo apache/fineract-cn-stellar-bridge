@@ -23,7 +23,7 @@ import org.apache.fineract.cn.api.context.AutoUserContext;
 import org.apache.fineract.cn.stellarbridge.api.v1.client.StellarBridgeManager;
 import org.apache.fineract.cn.stellarbridge.api.v1.domain.BridgeConfiguration;
 import org.apache.fineract.cn.stellarbridge.api.v1.events.EventConstants;
-import org.apache.fineract.cn.stellarbridge.service.StellarBridgeConfiguration;
+import org.apache.fineract.cn.stellarbridge.service.internal.config.StellarBridgeConfiguration;
 import org.apache.fineract.cn.test.fixture.TenantDataStoreContextTestRule;
 import org.apache.fineract.cn.test.listener.EnableEventRecording;
 import org.apache.fineract.cn.test.listener.EventRecorder;
@@ -48,7 +48,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT,
+    properties = {"stellarBridge.user=homer", "stellarBridge.horizonAddress=https://horizon-testnet.stellar.org"})
 public class TestBridgeConfiguration extends SuiteTestEnvironment {
   private static final String LOGGER_NAME = "test-logger";
   private static final String TEST_USER = "homer";

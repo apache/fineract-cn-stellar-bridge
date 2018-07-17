@@ -25,7 +25,7 @@ import org.apache.fineract.cn.stellarbridge.api.v1.events.EventConstants;
 import org.apache.fineract.cn.stellarbridge.service.internal.command.ChangeConfigurationCommand;
 import org.apache.fineract.cn.stellarbridge.service.internal.mapper.BridgeConfigurationMapper;
 import org.apache.fineract.cn.stellarbridge.service.internal.repository.BridgeConfigurationEntity;
-import org.apache.fineract.cn.stellarbridge.service.internal.repository.BridgeConfigurationEntityRepository;
+import org.apache.fineract.cn.stellarbridge.service.internal.repository.BridgeConfigurationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,16 +33,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Aggregate
 public class BridgeConfigurationCommandHandler {
 
-  private final BridgeConfigurationEntityRepository bridgeConfigurationEntityRepository;
+  private final BridgeConfigurationRepository bridgeConfigurationRepository;
   private final EventHelper eventHelper;
 
   @Autowired
   public BridgeConfigurationCommandHandler(
-      final BridgeConfigurationEntityRepository bridgeConfigurationEntityRepository,
+      final BridgeConfigurationRepository bridgeConfigurationRepository,
       final EventHelper eventHelper) {
-    this.bridgeConfigurationEntityRepository = bridgeConfigurationEntityRepository;
+    this.bridgeConfigurationRepository = bridgeConfigurationRepository;
     this.eventHelper = eventHelper;
   }
+
   @CommandHandler(logStart = CommandLogLevel.INFO, logFinish = CommandLogLevel.INFO)
   @Transactional
   public void handle(final ChangeConfigurationCommand changeConfigurationCommand) {
@@ -50,7 +51,7 @@ public class BridgeConfigurationCommandHandler {
     final BridgeConfigurationEntity entity = BridgeConfigurationMapper.map(
         changeConfigurationCommand.tenantIdentifier(),
         changeConfigurationCommand.instance());
-    this.bridgeConfigurationEntityRepository.save(entity);
+    this.bridgeConfigurationRepository.save(entity);
 
     eventHelper.sendEvent(EventConstants.PUT_CONFIG, changeConfigurationCommand.tenantIdentifier(), null);
   }

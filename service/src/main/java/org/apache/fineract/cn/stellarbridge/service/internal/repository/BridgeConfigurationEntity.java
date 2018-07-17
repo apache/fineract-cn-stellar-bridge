@@ -36,8 +36,12 @@ public class BridgeConfigurationEntity {
   private String fineractIncomingAccountIdentifier;
   @Column(name = "fineract_outgoing_identifier")
   private String fineractOutgoingAccountIdentifier;
+  @Column(name = "fineract_staging_identifier")
+  private String fineractStagingAccountIdentifier;
   @Column(name = "stellar_identifier")
   private String stellarAccountIdentifier;
+  @Column(name = "stellar_account_private_key")
+  private char[] stellarAccountPrivateKey;
 
   public BridgeConfigurationEntity() {
     super();
@@ -75,12 +79,28 @@ public class BridgeConfigurationEntity {
     this.fineractOutgoingAccountIdentifier = fineractOutgoingAccountIdentifier;
   }
 
+  public String getFineractStagingAccountIdentifier() {
+    return fineractStagingAccountIdentifier;
+  }
+
+  public void setFineractStagingAccountIdentifier(String fineractStagingAccountIdentifier) {
+    this.fineractStagingAccountIdentifier = fineractStagingAccountIdentifier;
+  }
+
   public String getStellarAccountIdentifier() {
     return stellarAccountIdentifier;
   }
 
   public void setStellarAccountIdentifier(String stellarAccountIdentifier) {
     this.stellarAccountIdentifier = stellarAccountIdentifier;
+  }
+
+  public char[] getStellarAccountPrivateKey() {
+    return stellarAccountPrivateKey;
+  }
+
+  public void setStellarAccountPrivateKey(char[] stellarAccountPrivateKey) {
+    this.stellarAccountPrivateKey = stellarAccountPrivateKey;
   }
 
   @Override

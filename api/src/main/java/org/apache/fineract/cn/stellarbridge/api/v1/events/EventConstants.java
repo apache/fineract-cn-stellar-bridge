@@ -25,6 +25,10 @@ public interface EventConstants {
   String SELECTOR_NAME = "action";
   String INITIALIZE = "initialize";
   String PUT_CONFIG = "put-config";
+  String STELLAR_PAYMENT_PROCESSED = "bridge-stellar-payment";
+  String FINERACT_PAYMENT_PROCESSED = "bridge-fineract-payment";
   String SELECTOR_INITIALIZE = SELECTOR_NAME + " = '" + INITIALIZE + "'";
-  String SELECTOR_POST_SAMPLE = SELECTOR_NAME + " = '" + PUT_CONFIG + "'";
+  String SELECTOR_PUT_CONFIG = SELECTOR_NAME + " = '" + PUT_CONFIG + "'";
+  String SELECTOR_STELLAR_PAYMENT_PROCESSED = SELECTOR_NAME + " = '" + STELLAR_PAYMENT_PROCESSED + "'";
+  String SELECTOR_FINERACT_PAYMENT_PROCESSED = SELECTOR_NAME + " = '" + FINERACT_PAYMENT_PROCESSED + "'";
 }
