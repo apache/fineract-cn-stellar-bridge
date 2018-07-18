@@ -57,7 +57,7 @@ public class FineractPaymentCommandHandler {
         StellarAddress.forTenant(command.getTargetAccount(), command.getSinkDomain()));
 
     final char[] decodedStellarPrivateKey =
-        bridgeConfigurationEntity.getStellarAccountPrivateKey();
+        bridgeConfigurationEntity.getStellarAccountPrivateKey().toCharArray();
 
     horizonServerUtilities.findPathPay(
         targetAccountId,
@@ -65,7 +65,8 @@ public class FineractPaymentCommandHandler {
         decodedStellarPrivateKey);
 
     accountingAdapter.tellFineractPaymentSucceeded(
-        bridgeConfigurationEntity.getFineractStagingAccountIdentifier(),
+        bridgeConfigurationEntity.getFineractOutgoingLedger(),
+        bridgeConfigurationEntity.getFineractStellerLedger(),
         command.getAssetCode(),
         command.getAmount());
 

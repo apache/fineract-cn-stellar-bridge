@@ -37,3 +37,12 @@ CREATE TABLE nenet_stellar_cursor (
   CONSTRAINT nenet_stellar_cursor_uq UNIQUE (xcursor),
   CONSTRAINT nenet_stellar_cursor_pk PRIMARY KEY (id)
 );
+
+CREATE TABLE nenet_currency_issuer (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  tenant_identifier  VARCHAR(32)  NOT NULL,
+  currency_code      VARCHAR(3)   NOT NULL,
+  stellar_issuer     VARCHAR(512) NULL,
+  CONSTRAINT nenet_currency_issuer_uq UNIQUE (tenant_identifier, currency_code),
+  CONSTRAINT nenet_currency_issuer_pk PRIMARY KEY (id)
+);

@@ -33,7 +33,7 @@ public class BridgeConfigurationTest extends ValidationTest<BridgeConfiguration>
 
   @Override
   protected BridgeConfiguration createValidTestSubject() {
-    return new BridgeConfiguration("xxxx", "yyy", "zzz");
+    return new BridgeConfiguration("aaa", "xxxx", "yyy", "zzz", "oo");
   }
 
   @Parameterized.Parameters
@@ -43,13 +43,13 @@ public class BridgeConfigurationTest extends ValidationTest<BridgeConfiguration>
             .adjustment(x -> {})
             .valid(true));
     ret.add(new ValidationTestCase<BridgeConfiguration>("nullIdentifier")
-            .adjustment(x -> x.setFineractIncomingAccountIdentifier(null))
+            .adjustment(x -> x.setFineractIncomingStagingLedgerIdentifier(null))
             .valid(false));
     ret.add(new ValidationTestCase<BridgeConfiguration>("tooShortIdentifier")
-            .adjustment(x -> x.setFineractIncomingAccountIdentifier("z"))
+            .adjustment(x -> x.setFineractIncomingStagingLedgerIdentifier("z"))
             .valid(false));
     ret.add(new ValidationTestCase<BridgeConfiguration>("tooLongPayload")
-            .adjustment(x -> x.setFineractIncomingAccountIdentifier(RandomStringUtils.randomAlphanumeric(513)))
+            .adjustment(x -> x.setFineractIncomingStagingLedgerIdentifier(RandomStringUtils.randomAlphanumeric(513)))
             .valid(false));
     return ret;
   }

@@ -13,6 +13,7 @@ import org.apache.fineract.cn.stellarbridge.service.internal.repository.StellarC
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.stereotype.Component;
 import org.stellar.sdk.KeyPair;
 import org.stellar.sdk.requests.EffectsRequestBuilder;
@@ -29,11 +30,17 @@ public class HorizonServerPaymentObserver {
   @PostConstruct
   void init()
   {
-    final Optional<String> cursor = getCurrentCursor();
+    try {
+      final Optional<String> cursor = this.getCurrentCursor();
 
-    bridgeConfigurationRepository.findAll()
-        .forEach(config -> setupListeningForAccount(
-            StellarAccountId.mainAccount(config.getStellarAccountIdentifier()), cursor));
+      bridgeConfigurationRepository.findAll()
+          .forEach(config -> setupListeningForAccount(
+              StellarAccountId.mainAccount(config.getStellarAccountIdentifier()), cursor));
+    }
+    catch (InvalidDataAccessResourceUsageException x) {
+      //Nothing.  If the repository hasn't been provisioned yet, there are no mapped accounts to
+      //listen in on.
+    }
   }
 
   @Autowired

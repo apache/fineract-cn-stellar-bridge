@@ -30,18 +30,22 @@ public class BridgeConfigurationMapper {
 
   public static BridgeConfiguration map(final BridgeConfigurationEntity toMap) {
     final BridgeConfiguration bridgeConfiguration = new BridgeConfiguration();
-    bridgeConfiguration.setFineractIncomingAccountIdentifier(toMap.getFineractIncomingAccountIdentifier());
-    bridgeConfiguration.setFineractOutgoingAccountIdentifier(toMap.getFineractOutgoingAccountIdentifier());
+    bridgeConfiguration.setFineractIncomingStagingLedgerIdentifier(toMap.getFineractIncomingLedger());
+    bridgeConfiguration.setFineractOutgoingStagingLedgerIdentifier(toMap.getFineractOutgoingLedger());
+    bridgeConfiguration.setFineractStellarAssetsLedgerIdentifier(toMap.getFineractStellerLedger());
     bridgeConfiguration.setStellarAccountIdentifier(toMap.getStellarAccountIdentifier());
+    bridgeConfiguration.setStellarPrivateKey(toMap.getStellarAccountPrivateKey());
     return bridgeConfiguration;
   }
 
   public static BridgeConfigurationEntity map(final String forTenant, final BridgeConfiguration toMap) {
     final BridgeConfigurationEntity bridgeConfigurationEntity = new BridgeConfigurationEntity();
     bridgeConfigurationEntity.setTenantIdentifier(forTenant);
-    bridgeConfigurationEntity.setFineractIncomingAccountIdentifier(toMap.getFineractIncomingAccountIdentifier());
-    bridgeConfigurationEntity.setFineractOutgoingAccountIdentifier(toMap.getFineractOutgoingAccountIdentifier());
+    bridgeConfigurationEntity.setFineractIncomingLedger(toMap.getFineractIncomingStagingLedgerIdentifier());
+    bridgeConfigurationEntity.setFineractOutgoingLedger(toMap.getFineractOutgoingStagingLedgerIdentifier());
+    bridgeConfigurationEntity.setFineractStellerLedger(toMap.getFineractStellarAssetsLedgerIdentifier());
     bridgeConfigurationEntity.setStellarAccountIdentifier(toMap.getStellarAccountIdentifier());
+    bridgeConfigurationEntity.setStellarAccountPrivateKey(toMap.getStellarPrivateKey());
     return bridgeConfigurationEntity;
   }
 }

@@ -18,17 +18,19 @@
  */
 package org.apache.fineract.cn.stellarbridge.api.v1.client;
 
+import java.util.List;
 import org.apache.fineract.cn.api.util.CustomFeignClientsConfiguration;
 import org.apache.fineract.cn.stellarbridge.api.v1.domain.BridgeConfiguration;
+import org.apache.fineract.cn.stellarbridge.api.v1.domain.StellarCurrencyIssuer;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @SuppressWarnings("unused")
 @FeignClient(value="stellarbridge-v1", path="/stellarbridge/v1", configuration = CustomFeignClientsConfiguration.class)
 public interface StellarBridgeManager {
-
   @RequestMapping(
           value = "/config",
           method = RequestMethod.GET,
@@ -37,6 +39,7 @@ public interface StellarBridgeManager {
   )
   BridgeConfiguration getBridgeConfiguration();
 
+
   @RequestMapping(
       value = "/config",
       method = RequestMethod.PUT,
@@ -44,4 +47,25 @@ public interface StellarBridgeManager {
       consumes = MediaType.APPLICATION_JSON_VALUE
   )
   void setBridgeConfiguration(final BridgeConfiguration bridgeConfiguration);
+
+/**
+ *  A currency with the same code can be available from many issuers.  The stellar bridge needs to
+ *  know which one to use.
+ */
+  @RequestMapping(
+      value = "/currencyissuers",
+      method = RequestMethod.GET,
+      produces = {MediaType.ALL_VALUE},
+      consumes = {MediaType.APPLICATION_JSON_VALUE}
+  )
+  List<StellarCurrencyIssuer> getAllCurrencyIssuers();
+
+  @RequestMapping(
+      value = "/currencyissuers/{currencycode}/",
+      method = RequestMethod.GET,
+      produces = {MediaType.ALL_VALUE},
+      consumes = {MediaType.APPLICATION_JSON_VALUE}
+  )
+  StellarCurrencyIssuer getCurrencyIssuerForCurrency(
+      @PathVariable("currencycode") final String currencyCode);
 }

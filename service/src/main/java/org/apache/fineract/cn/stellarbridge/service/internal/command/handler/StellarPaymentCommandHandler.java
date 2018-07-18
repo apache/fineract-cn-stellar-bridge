@@ -31,16 +31,22 @@ public class StellarPaymentCommandHandler {
 
   @CommandHandler(logStart = CommandLogLevel.INFO, logFinish = CommandLogLevel.INFO)
   @Transactional
-  public void handle(final StellarPaymentCommand command) {
+  public void handle(final StellarPaymentCommand command) throws InterruptedException {
 
     final Optional<BridgeConfigurationEntity> accountBridge =
         bridgeConfigurationRepository.findByTenantIdentifier(command.getTenantIdentifier());
 
-    final Optional<String> transactionIdentifier = accountBridge.map(x -> accountingAdapter.adjustFineractBalances(
-        x, command.getAmount(), command.getAssetCode()));
+    if (accountBridge.isPresent())
+    {
+      final String transactionIdentifier = accountingAdapter.acceptIncomingPayment(
+          accountBridge.get(), command.getAmount(), command.getAssetCode(),
+          command.getTransactionDate());
 
-    transactionIdentifier.ifPresent(x ->
-        eventHelper.sendEvent(EventConstants.STELLAR_PAYMENT_PROCESSED, command.getTenantIdentifier(), x));
+      eventHelper.sendEvent(
+          EventConstants.STELLAR_PAYMENT_PROCESSED,
+          command.getTenantIdentifier(),
+          transactionIdentifier);
+    }
   }
 
 }

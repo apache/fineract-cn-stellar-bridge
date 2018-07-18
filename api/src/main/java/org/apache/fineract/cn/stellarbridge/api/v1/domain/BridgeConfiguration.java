@@ -24,38 +24,60 @@ import org.apache.fineract.cn.lang.validation.constraints.ValidIdentifier;
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class BridgeConfiguration {
   @ValidIdentifier
-  private String fineractIncomingAccountIdentifier;
+  private String fineractOutgoingStagingLedgerIdentifier;
 
   @ValidIdentifier
-  private String fineractOutgoingAccountIdentifier;
+  private String fineractStellarAssetsLedgerIdentifier;
+
+  @ValidIdentifier
+  private String fineractIncomingStagingLedgerIdentifier;
 
   private String stellarAccountIdentifier;
+
+  private String stellarPrivateKey;
 
   public BridgeConfiguration() {
     super();
   }
 
-  public BridgeConfiguration(String fineractIncomingAccountIdentifier,
-      String fineractOutgoingAccountIdentifier, String stellarAccountIdentifier) {
-    this.fineractIncomingAccountIdentifier = fineractIncomingAccountIdentifier;
-    this.fineractOutgoingAccountIdentifier = fineractOutgoingAccountIdentifier;
+  public BridgeConfiguration(
+      String fineractOutgoingStagingLedgerIdentifier,
+      String fineractStellarAssetsLedgerIdentifier,
+      String fineractIncomingStagingLedgerIdentifier,
+      String stellarAccountIdentifier,
+      String stellarPrivateKey) {
+    this.fineractOutgoingStagingLedgerIdentifier = fineractOutgoingStagingLedgerIdentifier;
+    this.fineractStellarAssetsLedgerIdentifier = fineractStellarAssetsLedgerIdentifier;
+    this.fineractIncomingStagingLedgerIdentifier = fineractIncomingStagingLedgerIdentifier;
     this.stellarAccountIdentifier = stellarAccountIdentifier;
+    this.stellarPrivateKey = stellarPrivateKey;
   }
 
-  public String getFineractIncomingAccountIdentifier() {
-    return fineractIncomingAccountIdentifier;
+  public String getFineractOutgoingStagingLedgerIdentifier() {
+    return fineractOutgoingStagingLedgerIdentifier;
   }
 
-  public void setFineractIncomingAccountIdentifier(String fineractIncomingAccountIdentifier) {
-    this.fineractIncomingAccountIdentifier = fineractIncomingAccountIdentifier;
+  public void setFineractOutgoingStagingLedgerIdentifier(
+      String fineractOutgoingStagingLedgerIdentifier) {
+    this.fineractOutgoingStagingLedgerIdentifier = fineractOutgoingStagingLedgerIdentifier;
   }
 
-  public String getFineractOutgoingAccountIdentifier() {
-    return fineractOutgoingAccountIdentifier;
+  public String getFineractStellarAssetsLedgerIdentifier() {
+    return fineractStellarAssetsLedgerIdentifier;
   }
 
-  public void setFineractOutgoingAccountIdentifier(String fineractOutgoingAccountIdentifier) {
-    this.fineractOutgoingAccountIdentifier = fineractOutgoingAccountIdentifier;
+  public void setFineractStellarAssetsLedgerIdentifier(
+      String fineractStellarAssetsLedgerIdentifier) {
+    this.fineractStellarAssetsLedgerIdentifier = fineractStellarAssetsLedgerIdentifier;
+  }
+
+  public String getFineractIncomingStagingLedgerIdentifier() {
+    return fineractIncomingStagingLedgerIdentifier;
+  }
+
+  public void setFineractIncomingStagingLedgerIdentifier(
+      String fineractIncomingStagingLedgerIdentifier) {
+    this.fineractIncomingStagingLedgerIdentifier = fineractIncomingStagingLedgerIdentifier;
   }
 
   public String getStellarAccountIdentifier() {
@@ -64,6 +86,14 @@ public class BridgeConfiguration {
 
   public void setStellarAccountIdentifier(String stellarAccountIdentifier) {
     this.stellarAccountIdentifier = stellarAccountIdentifier;
+  }
+
+  public String  getStellarPrivateKey() {
+    return stellarPrivateKey;
+  }
+
+  public void setStellarPrivateKey(String  stellarPrivateKey) {
+    this.stellarPrivateKey = stellarPrivateKey;
   }
 
   @Override
@@ -76,24 +106,36 @@ public class BridgeConfiguration {
     }
     BridgeConfiguration that = (BridgeConfiguration) o;
     return Objects
-        .equals(fineractIncomingAccountIdentifier, that.fineractIncomingAccountIdentifier) &&
+        .equals(fineractOutgoingStagingLedgerIdentifier,
+            that.fineractOutgoingStagingLedgerIdentifier)
+        &&
         Objects
-            .equals(fineractOutgoingAccountIdentifier, that.fineractOutgoingAccountIdentifier) &&
-        Objects.equals(stellarAccountIdentifier, that.stellarAccountIdentifier);
+            .equals(fineractStellarAssetsLedgerIdentifier,
+                that.fineractStellarAssetsLedgerIdentifier)
+        &&
+        Objects.equals(fineractIncomingStagingLedgerIdentifier,
+            that.fineractIncomingStagingLedgerIdentifier) &&
+        Objects.equals(stellarAccountIdentifier, that.stellarAccountIdentifier) &&
+        Objects.equals(stellarPrivateKey, that.stellarPrivateKey);
   }
 
   @Override
   public int hashCode() {
 
-    return Objects.hash(fineractIncomingAccountIdentifier, fineractOutgoingAccountIdentifier,
-        stellarAccountIdentifier);
+    return Objects
+        .hash(fineractOutgoingStagingLedgerIdentifier, fineractStellarAssetsLedgerIdentifier,
+            fineractIncomingStagingLedgerIdentifier, stellarAccountIdentifier, stellarPrivateKey);
   }
 
   @Override
   public String toString() {
     return "BridgeConfiguration{" +
-        "fineractIncomingAccountIdentifier='" + fineractIncomingAccountIdentifier + '\'' +
-        ", fineractOutgoingAccountIdentifier='" + fineractOutgoingAccountIdentifier + '\'' +
+        "fineractOutgoingStagingLedgerIdentifier='" + fineractOutgoingStagingLedgerIdentifier + '\''
+        +
+        ", fineractStellarAssetsLedgerIdentifier='" + fineractStellarAssetsLedgerIdentifier + '\'' +
+        ", fineractIncomingStagingLedgerIdentifier='" + fineractIncomingStagingLedgerIdentifier
+        + '\''
+        +
         ", stellarAccountIdentifier='" + stellarAccountIdentifier + '\'' +
         '}';
   }

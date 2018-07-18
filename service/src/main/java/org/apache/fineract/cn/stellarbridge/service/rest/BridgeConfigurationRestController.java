@@ -24,6 +24,7 @@ import javax.validation.Valid;
 import org.apache.fineract.cn.anubis.annotation.AcceptedTokenType;
 import org.apache.fineract.cn.anubis.annotation.Permittable;
 import org.apache.fineract.cn.command.gateway.CommandGateway;
+import org.apache.fineract.cn.lang.ServiceException;
 import org.apache.fineract.cn.stellarbridge.api.v1.PermittableGroupIds;
 import org.apache.fineract.cn.stellarbridge.api.v1.domain.BridgeConfiguration;
 import org.apache.fineract.cn.stellarbridge.service.internal.command.ChangeConfigurationCommand;
@@ -81,8 +82,9 @@ public class BridgeConfigurationRestController {
   @ResponseBody
   ResponseEntity<BridgeConfiguration> getBridgeConfiguration(
       @RequestHeader(TENANT_HEADER) final String tenantIdentifier) {
-    return ResponseEntity.ok(this.bridgeConfigurationService.findByTenantIdentifier(tenantIdentifier)
-        .orElseGet(() -> new BridgeConfiguration(null, null, null)));
+    return this.bridgeConfigurationService.findByTenantIdentifier(tenantIdentifier)
+        .map(ResponseEntity::ok)
+        .orElseThrow(() -> ServiceException.notFound("Tenant not found."));
   }
 
   @Permittable(value = AcceptedTokenType.TENANT, groupId = PermittableGroupIds.CONFIGURATION_MANAGEMENT)

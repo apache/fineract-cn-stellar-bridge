@@ -25,23 +25,22 @@ import javax.persistence.*;
 @Entity
 @Table(name = "nenet_configuration")
 public class BridgeConfigurationEntity {
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private Long id;
   @Column(name = "tenant_identifier")
   private String tenantIdentifier;
-  @Column(name = "fineract_incoming_identifier")
-  private String fineractIncomingAccountIdentifier;
-  @Column(name = "fineract_outgoing_identifier")
-  private String fineractOutgoingAccountIdentifier;
-  @Column(name = "fineract_staging_identifier")
-  private String fineractStagingAccountIdentifier;
+  @Column(name = "fineract_incoming_ledger")
+  private String fineractIncomingLedger;
+  @Column(name = "fineract_outgoing_ledger")
+  private String fineractOutgoingLedger;
+  @Column(name = "fineract_stellar_ledger")
+  private String fineractStellerLedger;
   @Column(name = "stellar_identifier")
   private String stellarAccountIdentifier;
-  @Column(name = "stellar_account_private_key")
-  private char[] stellarAccountPrivateKey;
+  @Column(name = "stellar_private_key")
+  private String stellarAccountPrivateKey;
 
   public BridgeConfigurationEntity() {
     super();
@@ -63,28 +62,28 @@ public class BridgeConfigurationEntity {
     this.tenantIdentifier = tenantIdentifier;
   }
 
-  public String getFineractIncomingAccountIdentifier() {
-    return fineractIncomingAccountIdentifier;
+  public String getFineractIncomingLedger() {
+    return fineractIncomingLedger;
   }
 
-  public void setFineractIncomingAccountIdentifier(String fineractIncomingAccountIdentifier) {
-    this.fineractIncomingAccountIdentifier = fineractIncomingAccountIdentifier;
+  public void setFineractIncomingLedger(String fineractIncomingLedger) {
+    this.fineractIncomingLedger = fineractIncomingLedger;
   }
 
-  public String getFineractOutgoingAccountIdentifier() {
-    return fineractOutgoingAccountIdentifier;
+  public String getFineractOutgoingLedger() {
+    return fineractOutgoingLedger;
   }
 
-  public void setFineractOutgoingAccountIdentifier(String fineractOutgoingAccountIdentifier) {
-    this.fineractOutgoingAccountIdentifier = fineractOutgoingAccountIdentifier;
+  public void setFineractOutgoingLedger(String fineractOutgoingLedger) {
+    this.fineractOutgoingLedger = fineractOutgoingLedger;
   }
 
-  public String getFineractStagingAccountIdentifier() {
-    return fineractStagingAccountIdentifier;
+  public String getFineractStellerLedger() {
+    return fineractStellerLedger;
   }
 
-  public void setFineractStagingAccountIdentifier(String fineractStagingAccountIdentifier) {
-    this.fineractStagingAccountIdentifier = fineractStagingAccountIdentifier;
+  public void setFineractStellerLedger(String fineractStellerLedger) {
+    this.fineractStellerLedger = fineractStellerLedger;
   }
 
   public String getStellarAccountIdentifier() {
@@ -95,11 +94,11 @@ public class BridgeConfigurationEntity {
     this.stellarAccountIdentifier = stellarAccountIdentifier;
   }
 
-  public char[] getStellarAccountPrivateKey() {
+  public String getStellarAccountPrivateKey() {
     return stellarAccountPrivateKey;
   }
 
-  public void setStellarAccountPrivateKey(char[] stellarAccountPrivateKey) {
+  public void setStellarAccountPrivateKey(String stellarAccountPrivateKey) {
     this.stellarAccountPrivateKey = stellarAccountPrivateKey;
   }
 

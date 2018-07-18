@@ -20,7 +20,7 @@ public class StellarCursorEntity {
   @Column(name = "id")
   private Long id;
 
-  @Column(name = "cursor")
+  @Column(name = "xcursor")
   private String cursor;
 
   @SuppressWarnings("unused")

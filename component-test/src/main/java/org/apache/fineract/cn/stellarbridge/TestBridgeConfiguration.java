@@ -122,6 +122,8 @@ public class TestBridgeConfiguration extends SuiteTestEnvironment {
         new BridgeConfiguration(
             "blah",
             "blah",
+            "blah",
+            "blah",
             "blah");
     this.testSubject.setBridgeConfiguration(bridgeConfiguration);
 

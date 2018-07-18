@@ -1,6 +1,8 @@
 package org.apache.fineract.cn.stellarbridge.service.internal.horizonadapter;
 
 import java.math.BigDecimal;
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
 import org.apache.fineract.cn.command.gateway.CommandGateway;
@@ -96,7 +98,8 @@ public class HorizonServerEffectsListener implements EventListener<EffectRespons
         return;
 
       final StellarPaymentCommand receivePaymentCommand =
-          new StellarPaymentCommand(toAccount.getTenantIdentifier(), assetCode, amount);
+          new StellarPaymentCommand(toAccount.getTenantIdentifier(), assetCode, amount,
+              LocalDateTime.now(Clock.systemUTC()));
       commandGateway.process(receivePaymentCommand);
     }
     else if (effect instanceof AccountDebitedEffectResponse)
@@ -121,7 +124,8 @@ public class HorizonServerEffectsListener implements EventListener<EffectRespons
         return;
 
       final StellarPaymentCommand receivePaymentCommand =
-          new StellarPaymentCommand(toAccount.getTenantIdentifier(), assetCode, amount.negate());
+          new StellarPaymentCommand(toAccount.getTenantIdentifier(), assetCode, amount.negate(),
+              LocalDateTime.now(Clock.systemUTC()));
       commandGateway.process(receivePaymentCommand);
     }
     else
